@@ -45,8 +45,9 @@
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>sunnylabs-snapshots</id>
+      <name>Snapshot Repository</name>
+      <url>https://repo.wavefront.com/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -74,10 +75,32 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5</version>
       </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>nexus-upload</id>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+            <phase>${nexus.upload.phase}</phase>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
   <profiles>
+    <profile>
+      <id>nexus</id>
+      <properties>
+        <nexus.upload.phase>deploy</nexus.upload.phase>
+      </properties>
+    </profile>
     <profile>
       <id>release-sign-artifacts</id>
       <activation>
