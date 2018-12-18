@@ -41,12 +41,12 @@
 
   <distributionManagement>
     <repository>
-      <id>sonatype-nexus-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <id>sunnylabs-releases</id>
+      <url>https://repo.wavefront.com/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>sunnylabs-snapshots</id>
+      <url>https://repo.wavefront.com/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -68,6 +68,22 @@
           <source>1.5</source>
           <target>1.5</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>nexus-upload</id>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+            <phase>deploy</phase>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
